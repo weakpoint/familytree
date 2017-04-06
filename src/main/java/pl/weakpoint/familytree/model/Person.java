@@ -2,38 +2,136 @@ package pl.weakpoint.familytree.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.annotation.Id;
 
 public class Person {
 	@Id
-    public String id;
+    private String id;
 
-    public String firstName;
-    public String lastName;
-    public String familyLastName;
-    public Date birthDate;
-    public Date deathDate;
-    public String familyCity;
-    public String city;
+    private String firstName;
+    private String lastName;
+    private String familyLastName;
+    private Date birthDate;
+    private Date deathDate;
+    private String familyCity;
+    private String city;
     
-    public List<String> parents;
-    public List<String> siblings;
+    private List<String> parents;
+    private List<String> siblings;
+    private List<String> childen;
     
     public Person(){}
     
-	public Person(String firstName, String lastName, String familyLastName, Date birthDate, Date deathDate, String familyCity, String city,
-			List<String> parents, List<String> siblings) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.familyLastName = familyLastName;
-		this.birthDate = birthDate;
-		this.deathDate = deathDate;
-		this.familyCity = familyCity;
-		this.city = city;
-		this.parents = parents;
-		this.siblings = siblings;
+    
+    public String getId() {
+		return id;
 	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+
+	public String getLastName() {
+		return lastName;
+	}
+
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+
+	public String getFamilyLastName() {
+		return familyLastName;
+	}
+
+
+	public void setFamilyLastName(String familyLastName) {
+		this.familyLastName = familyLastName;
+	}
+
+
+	public Date getBirthDate() {
+		return birthDate;
+	}
+
+
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
+
+
+	public Date getDeathDate() {
+		return deathDate;
+	}
+
+
+	public void setDeathDate(Date deathDate) {
+		this.deathDate = deathDate;
+	}
+
+
+	public String getFamilyCity() {
+		return familyCity;
+	}
+
+
+	public void setFamilyCity(String familyCity) {
+		this.familyCity = familyCity;
+	}
+
+
+	public String getCity() {
+		return city;
+	}
+
+
+	public void setCity(String city) {
+		this.city = city;
+	}
+
+
+	public List<String> getParents() {
+		return parents;
+	}
+
+	
+	public void setParents(List<Person> parents) {
+		this.parents = parents.stream().map(person -> person.id).collect(Collectors.toList());
+	}
+
+
+	public List<String> getSiblings() {
+		return siblings;
+	}
+
+
+	public void setSiblings(List<Person> siblings) {
+		this.siblings = siblings.stream().map(person -> person.id).collect(Collectors.toList());
+	}
+
+
+	public List<String> getChilden() {
+		return childen;
+	}
+
+
+	public void setChilden(List<Person> childen) {
+		this.childen = childen.stream().map(person -> person.id).collect(Collectors.toList());
+	}
+
 
 	@Override
 	public String toString() {

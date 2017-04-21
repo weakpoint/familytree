@@ -109,7 +109,7 @@ public class Person {
 
 	
 	public void setParents(List<Person> parents) {
-		this.parents = parents.stream().map(person -> person.id).collect(Collectors.toList());
+			this.parents = parents.stream().map(person -> person.id).collect(Collectors.toList());
 	}
 
 
@@ -119,6 +119,7 @@ public class Person {
 
 
 	public void setSiblings(List<Person> siblings) {
+		
 		this.siblings = siblings.stream().map(person -> person.id).collect(Collectors.toList());
 	}
 
@@ -129,6 +130,7 @@ public class Person {
 
 
 	public void setChilden(List<Person> childen) {
+		
 		this.childen = childen.stream().map(person -> person.id).collect(Collectors.toList());
 	}
 

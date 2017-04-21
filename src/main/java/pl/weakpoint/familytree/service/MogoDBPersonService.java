@@ -55,6 +55,7 @@ public final class MogoDBPersonService implements PersonService {
 	@Override
 	public List<PersonDTO> findAll() {
 		List<Person> findAll = repository.findAll();
+
 		return findAll.stream().map(person -> this.convertPersonToPersonDTO(person)).collect(Collectors.toList());
 	}
 

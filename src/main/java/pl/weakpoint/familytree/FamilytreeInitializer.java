@@ -1,29 +1,23 @@
 package pl.weakpoint.familytree;
 
-import javax.servlet.ServletContext;
-import javax.servlet.ServletRegistration;
+import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-import org.springframework.web.WebApplicationInitializer;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.servlet.DispatcherServlet;
+public class FamilytreeInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
 
-public class FamilytreeInitializer implements WebApplicationInitializer {
+	@Override
+	protected Class[] getRootConfigClasses() {
+		return new Class[] { Application.class };
+	}
 
-    @Override
-    public void onStartup(ServletContext container) {
-      // Create the 'root' Spring application context
-      AnnotationConfigWebApplicationContext rootContext =
-        new AnnotationConfigWebApplicationContext();
-      rootContext.register(Application.class);
+	@Override
+	protected Class[] getServletConfigClasses() {
+		return null;
+	}
 
-      // Manage the lifecycle of the root application context
-      container.addListener(new ContextLoaderListener(rootContext));
-      // Register and map the dispatcher servlet
-      ServletRegistration.Dynamic dispatcher =
-        container.addServlet("dispatcher", new DispatcherServlet(rootContext));
-      dispatcher.setLoadOnStartup(1);
-      dispatcher.addMapping("/");
-    }
+	@Override
+	protected String[] getServletMappings() {
+		return new String[] { "/" };
+	}
 
- }
+
+}

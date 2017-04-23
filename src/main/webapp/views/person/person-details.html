@@ -1,0 +1,115 @@
+<section >
+    <h3>Personal data:</h3>
+
+    <div >
+        <form name="userForm" novalidate ng-submit="userForm.$valid && saveUser(usertemp)">
+
+            <!--Name-->
+            <span class="user-details-label">First name:</span>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : !userForm.userName.$valid }">
+                <input name="userName"
+                       class="form-control input-user-details"
+                       ng-pattern="/^[a-zA-Z'ęĘóÓąĄśŚłŁżŻźŹćĆńŃ-]+$/"
+                       ng-model="usertemp.firstName"
+                       required
+                       ng-minlength="2"
+                       ng-maxlength="40"/>
+                <div class="user-details-errors">
+                    <p ng-show="userForm.userName.$error.required"
+                       class="help-block">{{'field.required'|translate}}</p>
+                    <p ng-show="userForm.userName.$error.pattern"
+                       class="help-block">{{'invalid.characters'|translate}}</p>
+                    <p ng-show="userForm.userName.$error.minlength"
+                       class="help-block">{{'too.short'|translate}}</p>
+                    <p ng-show="userForm.userName.$error.maxlength"
+                       class="help-block">{{'too.long'|translate}}</p>
+                </div>
+            </div>
+
+            <!--Last name-->
+            <span class="user-details-label">Last name:</span>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : !userForm.userLastName.$valid }">
+                <input name="userLastName"
+                       class="form-control input-user-details"
+                       ng-pattern="/^[a-zA-Z'ęĘóÓąĄśŚłŁżŻźŹćĆńŃ-]+$/"
+                       ng-model="usertemp.lastName"
+                       required
+                       ng-minlength="2"
+                       ng-maxlength="40"
+                       ng-readonly="isLdapUser()"/>
+                <div class="user-details-errors">
+                    <p ng-show="userForm.userLastName.$error.required"
+                       class="help-block">{{'field.required'|translate}}</p>
+                    <p ng-show="userForm.userLastName.$error.pattern"
+                       class="help-block">{{'invalid.characters'|translate}}</p>
+                    <p ng-show="userForm.userLastName.$error.minlength"
+                       class="help-block">{{'too.short'|translate}}</p>
+                    <p ng-show="userForm.userLastName.$error.maxlength"
+                       class="help-block">{{'too.long'|translate}}</p>
+                </div>
+            </div>
+
+            <!--Email-->
+            <span class="user-details-label">Email:</span>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : !userForm.userEmail.$valid}">
+                <input name="userEmail"
+                       type="email"
+                       class="form-control input-user-details"
+                       ng-pattern="/\.\w{2,3}$/"
+                       ng-model="usertemp.email" required
+                       ng-readonly="getUpdateUser()"/>
+                <div class="user-details-errors">
+                    <p ng-show="userForm.userEmail.$error.required"
+                       class="help-block">{{'field.required'|translate}}</p>
+                    <p ng-show="userForm.userEmail.$error.email || userForm.userEmail.$error.pattern"
+                       class="help-block">{{'incorrect.email'|translate}}</p>
+                </div>
+            </div>
+
+            <!--Location-->
+            <span class="user-details-label">Location:</span>
+            <div class="form-group"
+                 ng-class="{ 'has-error' : !userForm.location.$valid}">
+                <select name="location"
+                        class="form-control input-user-details"
+                        ng-model="usertemp.location"
+                        ng-options="location | translate for location in locationTable"
+                        required
+                        ng-disabled="isLdapUser()">
+                </select>
+                <div class="user-details-errors">
+                    <p ng-show="userForm.location.$error.required"
+                       class="help-block">{{'field.required'|translate}}</p>
+                </div>
+            </div>
+
+            <!-- Roles -->
+            <div>
+                <span class="user-details-label">Roles:</span>
+            </div>
+            <div ng-repeat="role in availableRoles | orderBy:['description']"
+                 ng-init="role.checkbox = {checked : false, disabled : false}">
+	    		<span ng-hide="isStandardRole(role)" class="badge user-details-badge">{{role.description}}
+					<input ng-hide="isStandardRole(role)" type="checkbox" ng-checked="isIntervieweeRole(role)"
+                           ng-model="role.checkbox.checked"
+                           ng-disabled="role.checkbox.disabled || isAdmin(role) || role.name == 'ROLE_INTERVIEWEE'"
+                           ng-change="roleChanged(role)">
+					<input ng-show="isStandardRole(role)" type="checkbox" ng-disabled="true" ng-checked="true">
+				</span>
+            </div>
+
+            <!--Buttons-->
+            <span class="btn-users-details">
+                <input class="btn btn-primary" type="submit" value="OK"/>
+                <a class="btn btn-primary" ng-click="cancel()">Cancel</a>
+                <a class="btn btn-primary" ng-click="clearAll(!user)" ng-hide="isLdapUser()">Clear All</a>
+            </span>
+
+        </form>
+        <br clear="all"/>
+    </div>
+
+</section>
